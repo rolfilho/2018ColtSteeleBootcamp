@@ -15,8 +15,15 @@ var express        = require("express"),
 var campgroundRoutes = require("./routes/campgrounds"),
     commentRoutes    = require("./routes/comments"),
     indexRoutes      = require("./routes/index");
+    
+// assign mongoose promise library and connect to database
+mongoose.Promise = global.Promise;
+const databaseUri = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp';
 
-mongoose.connect(process.env.DATABASEURL, {useMongoClient: true});
+mongoose.connect(databaseUri, {useMongoClient: true})
+      .then(() => console.log(`Database connected`))
+      .catch(err => console.log(`Database connection error: ${err.message}`));
+      
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));

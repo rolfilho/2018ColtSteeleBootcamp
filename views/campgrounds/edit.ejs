@@ -1,32 +1,36 @@
 <% include ../partials/header %>
-
-
-<div class="container">
     <div class="row">
-        <h1 style="text-align:center">Edit the campground <%=campground.name%></h1>
-        <div style="width:30%; margin:35px auto;">
+        <h1 style="text-align: center">Edit <%= campground.name %></h1>
+        <div style="width: 30%; margin: 25px auto;">
             <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST">
                 <div class="form-group">
-                    <input class ="form-control" type="text" value="<%=campground.name%>" name="campground[name]">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" name="name" id="name" value="<%= campground.name %>">
                 </div>
                 <div class="form-group">
-                    <input class ="form-control" type="text" value="<%=campground.image%>" name="campground[image]">
+                    <label for="image">Image Url</label>
+                    <!--pattern="^https:\/\/images\.unsplash\.com\/.*"-->
+                    <input class="form-control" type="text" name="image" id="image" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." value="<%= campground.image %>" required>
+                    <small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>
                 </div>
                 <div class="form-group">
-                    <input class ="form-control" type="text" value="<%=campground.description%>" name="campground[description]">
+                    <label for="cost">Cost</label>
+                    <input class="form-control" type="number" name="price" id="price" value="<%= campground.price %>" step="1" min="0" required>
                 </div>
                 <div class="form-group">
-                    <input class ="form-control" type="text" value="<%=campground.price%>" name="campground[price]">
+                    <label for="location">Location</label>
+                    <input class="form-control" type="text" name="location" id="location" value="<%= campground.location %>">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Submit</button>
+                    <label for="description">Description</label>
+                    <input class="form-control" type="text" name="description" id="description" value="<%= campground.description %>">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Update!</button>
                 </div>
             </form>
-            <a href="/campgrounds">Go back</a>
+            <a href="/campgrounds">Go Back</a>
         </div>
-        
     </div>
-
-</div>
-
 <% include ../partials/footer %>
+
