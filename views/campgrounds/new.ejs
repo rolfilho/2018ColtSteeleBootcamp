@@ -2,16 +2,14 @@
     <div class="row">
         <h1 style="text-align: center">Create a New Campground</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/campgrounds" method="POST">
+            <form action="/campgrounds" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="form-control" type="text" name="name" id="name" placeholder="Yosemite">
                 </div>
                 <div class="form-group">
-                    <label for="image">Image Url</label>
-                    <!--pattern="^https:\/\/images\.unsplash\.com\/.*"-->
-                    <input class="form-control" type="text" name="image" id="image" required>
-                    <!--<small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>-->
+                  <label for="image">Image</label>
+                  <input type="file" id="image" name="image" accept="image/*" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Price per Night (US$)</label>

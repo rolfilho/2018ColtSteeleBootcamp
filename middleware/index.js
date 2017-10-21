@@ -17,13 +17,12 @@ middlewareObj.checkCampgroundOwnership = function checkCampgroundOwnership(req, 
                     return res.redirect("back");
                 }
                 
-                if(foundCampground.author.id.equals(req.user._id) || req.user.isAdmin){
+                if(foundCampground.author.id.equals(req.user._id)){
                     next();
                 }
                 else {
                     req.flash("error", "You don't have permission to do that");
                     res.redirect("back");
-                    
                 }
            }
         });
@@ -44,7 +43,7 @@ middlewareObj.checkCommentOwnership = function checkCommentOwnership (req, res, 
                res.redirect("back");
             }
             else {
-                if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
+                if(foundComment.author.id.equals(req.user._id)){
                     next();
                 }
                 else {
@@ -62,7 +61,7 @@ middlewareObj.checkCommentOwnership = function checkCommentOwnership (req, res, 
 
 
 //Middleware
-middlewareObj.IsLoggedIn = function IsLoggedIn(req, res, next){
+middlewareObj.isLoggedIn = function isLoggedIn(req, res, next){
     if (req.isAuthenticated()){
         return next();
     }

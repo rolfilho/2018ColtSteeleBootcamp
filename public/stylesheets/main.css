@@ -18,3 +18,7 @@
     height: 400px;
     width: 100%;
 }
+
+#user-profile-link{
+    display: inline;
+}
