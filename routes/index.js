@@ -32,7 +32,7 @@ router.post("/register", function(req, res){
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log(err);
-            return res.render("register", {error: err.message});
+            return res.render("users/register", {error: err.message});
         }
         passport.authenticate("local")(req, res, function(){
            req.flash("success", "Successfully Signed Up as " + req.body.username + ".");
@@ -45,14 +45,14 @@ router.get("/login", function(req, res) {
    res.render("users/login", {page: "login"}); 
 });
 
-router.post("/login", passport.authenticate("local",
-    
+router.post("/login", passport.authenticate("local", 
     {
         successRedirect: "/campgrounds",
-        failureRedirect: "/login"
-    }),
-    function(req, res) {}
-);
+        failureRedirect: "/login",
+        failureFlash: true,
+        successFlash: 'Welcome to YelpCamp!'
+    }), function(req, res){
+});
 
 //Logout route
 router.get("/logout", function(req, res) {
