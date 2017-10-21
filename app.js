@@ -28,7 +28,7 @@ app.use(flash());
 
 // PASSPORT CONFIG
 app.use(require("express-session")({
-    secret: "Babyzoca gostosa",
+    secret: "my seed secret",
     resave: false,
     saveUninitialized: false
 }));
