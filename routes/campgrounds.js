@@ -48,9 +48,11 @@ router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(
    Campground.findByIdAndRemove(req.params.id, function(err,deletedCampground){
        if(err){
            console.log(err);
+           req.flash("error", "Couldn't delete campground");
            res.redirect("/campgrounds");
        }
        else {
+           req.flash("success", "Campground successfully deleted");
            res.redirect("/campgrounds");
        }
    }); 
