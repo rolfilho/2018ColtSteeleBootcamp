@@ -11,10 +11,10 @@
                     <label for="image">Image Url</label>
                     <!--pattern="^https:\/\/images\.unsplash\.com\/.*"-->
                     <input class="form-control" type="text" name="image" id="image" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." value="<%= campground.image %>" required>
-                    <small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>
+                    <!--<small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>-->
                 </div>
                 <div class="form-group">
-                    <label for="cost">Cost</label>
+                    <label for="cost">Price per Night (US$)</label>
                     <input class="form-control" type="number" name="price" id="price" value="<%= campground.price %>" step="1" min="0" required>
                 </div>
                 <div class="form-group">

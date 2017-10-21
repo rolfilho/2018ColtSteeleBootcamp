@@ -10,12 +10,12 @@
                 <div class="form-group">
                     <label for="image">Image Url</label>
                     <!--pattern="^https:\/\/images\.unsplash\.com\/.*"-->
-                    <input class="form-control" type="text" name="image" id="image" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." required>
-                    <small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>
+                    <input class="form-control" type="text" name="image" id="image" required>
+                    <!--<small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>-->
                 </div>
                 <div class="form-group">
                     <label for="price">Price per Night (US$)</label>
-                    <input class="form-control" type="number" name="price" id="price" placeholder="9.99" step="0.01" min="0" required>
+                    <input class="form-control" type="number" name="price" id="price" placeholder="9.99" step="1" min="0" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
