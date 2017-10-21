@@ -14,15 +14,30 @@ const { cloudinary, upload } = require('../middleware/cloudinary');
 
 //INDEX - SHOW ALL CAMPGROUNDS
 router.get("/campgrounds", function(req, res){
-    // Get all campgrounds
-    Campground.find({},function(err, allCampgrounds){
-        if(err){
-            console.log(err);
-        }
-        else {
-            res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
-        }
-    });
+  
+    if(req.query.search){
+        const regex = new RegExp(middleware.escapeRegex(req.query.search), 'gi');
+        //eval(require("locus"));
+        Campground.find({name: regex},function(err, filteredCampgrounds){
+            if(err){
+                console.log(err);
+            }
+            else {
+                res.render("campgrounds/index", {campgrounds: filteredCampgrounds, page: "campgrounds"});
+            }
+        });
+        
+    }
+    else {
+        Campground.find({},function(err, allCampgrounds){
+            if(err){
+                console.log(err);
+            }
+            else {
+                res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
+            }
+        });
+    }
 });
 
 //EDIT

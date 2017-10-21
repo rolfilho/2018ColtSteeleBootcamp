@@ -71,4 +71,8 @@ middlewareObj.isLoggedIn = function isLoggedIn(req, res, next){
     }
 };
 
+middlewareObj.escapeRegex = function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 module.exports = middlewareObj;
