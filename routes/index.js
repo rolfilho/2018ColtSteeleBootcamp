@@ -74,15 +74,21 @@ router.post('/forgot', function(req, res, next) {
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {
-        var token = buf.toString('hex');
-        done(err, token);
+        if (err){
+            console.log(err);
+        }
+        else {
+            var token = buf.toString('hex');
+            done(err, token);  
+        }
+
       });
     },
     function(token, done) {
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
           req.flash('error', 'No account with that email address exists.');
-          return res.redirect('users/forgot');
+          return res.redirect('/forgot');
         }
 
         user.resetPasswordToken = token;
@@ -118,7 +124,7 @@ router.post('/forgot', function(req, res, next) {
     }
   ], function(err) {
     if (err) return next(err);
-    res.redirect('users/forgot');
+    res.redirect('/forgot');
   });
 });
 
@@ -126,9 +132,9 @@ router.get('/reset/:token', function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
-      return res.redirect('users/forgot');
+      return res.redirect('/forgot');
     }
-    res.render('reset', {token: req.params.token});
+    res.render('users/reset', {token: req.params.token});
   });
 });
 
