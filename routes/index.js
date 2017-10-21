@@ -6,14 +6,14 @@ var nodemailer = require("nodemailer");
 var crypto     = require("crypto");
 
 var User = require("../models/user");
-var Campground = require("../models/campground");
+//var Campground = require("../models/campground");
 
 router.get("/", function(req, res){
    res.render("landing");
 });
 
 router.get("/register", function(req, res) {
-   res.render("/user/register", {page: "register"}); 
+   res.render("users/register", {page: "register"}); 
 });
 
 router.post("/register", function(req, res){
@@ -42,7 +42,7 @@ router.post("/register", function(req, res){
 });
 
 router.get("/login", function(req, res) {
-   res.render("/user/login", {page: "login"}); 
+   res.render("users/login", {page: "login"}); 
 });
 
 router.post("/login", passport.authenticate("local",
@@ -67,7 +67,7 @@ router.get("/logout", function(req, res) {
 //-----------------------------------------------
 
 router.get("/forgot", function (req, res) {
-    res.render("/users/forgot");
+    res.render("users/forgot");
 });
 
 router.post('/forgot', function(req, res, next) {
@@ -82,7 +82,7 @@ router.post('/forgot', function(req, res, next) {
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
           req.flash('error', 'No account with that email address exists.');
-          return res.redirect('/users/forgot');
+          return res.redirect('users/forgot');
         }
 
         user.resetPasswordToken = token;
@@ -118,7 +118,7 @@ router.post('/forgot', function(req, res, next) {
     }
   ], function(err) {
     if (err) return next(err);
-    res.redirect('/users/forgot');
+    res.redirect('users/forgot');
   });
 });
 
@@ -126,7 +126,7 @@ router.get('/reset/:token', function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
-      return res.redirect('/users/forgot');
+      return res.redirect('users/forgot');
     }
     res.render('reset', {token: req.params.token});
   });
@@ -182,22 +182,22 @@ router.post('/reset/:token', function(req, res) {
   });
 });
 
-// USER PROFILE
-router.get("/users/:id", function(req, res) {
-  User.findById(req.params.id, function(err, foundUser) {
-    if(err) {
-      req.flash("error", "Something went wrong.");
-      res.redirect("/");
-    }
-    Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds) {
-      if(err) {
-        req.flash("error", "Something went wrong.");
-        res.redirect("/");
-      }
-      res.render("users/show", {user: foundUser, campgrounds: campgrounds});
-    })
-  });
-});
+// // USER PROFILE
+// router.get("users/:id", function(req, res) {
+//   User.findById(req.params.id, function(err, foundUser) {
+//     if(err) {
+//       req.flash("error", "Something went wrong.");
+//       res.redirect("/");
+//     }
+//     Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds) {
+//       if(err) {
+//         req.flash("error", "Something went wrong.");
+//         res.redirect("/");
+//       }
+//       res.render("users/show", {user: foundUser, campgrounds: campgrounds});
+//     })
+//   });
+// });
 
 
 module.exports = router;
