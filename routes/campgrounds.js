@@ -48,12 +48,20 @@ router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, functio
 });
 
 //UPDATE
-router.put("/campgrounds/:id", function(req, res){
+router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res){
   geocoder.geocode(req.body.location, function (err, data) {
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
-    var newData = {name: req.body.name, image: req.body.image, description: req.body.description, price: req.body.price, location: location, lat: lat, lng: lng};
+    var newData = {
+        name: req.body.name,
+        image: req.body.image,
+        description: req.body.description,
+        price: req.body.price,
+        location: location,
+        lat: lat,
+        lng: lng};
+    
     Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
         if(err){
             req.flash("error", err.message);
@@ -84,8 +92,7 @@ router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(
 //=========================CREATE ROUTE=======================
 //==========================================================
 
-router.post("/campgrounds", upload.single('image'), async (req, res) => {
-  console.log(req.body);
+router.post("/campgrounds", middleware.isLoggedIn, upload.single('image'), async(req, res) => {
   // check if file uploaded otherwise redirect back and flash an error message
   if(!req.file) {
     console.log("no file!!");
